@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const config = require('./config');
+const port = 3306;
+
+const lavadoras =require('./rutas.js');
 
 app.get('/', (req, res) => {
   res.send('¡Hola Mundo!');
 });
 
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${3000}`);
+app.listen(port, () => { 
+  console.log(`Servidor escuchando en http://localhost:${3306}`);
 });
-
-console.log("hola mundo");
