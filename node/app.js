@@ -2,13 +2,16 @@
 import express from 'express';
 import cors from 'cors';
 import db from './SRC/config/dbConfig.js';
-
 import AdminRoutes from './SRC/Routes/routes.js'
-const app = express();
 
+const app = express();
+//const PORT=8000;
+
+//MIDDLEWARES
 app.use(cors());
 app.use(express.json());
-app.use('/Administrador',AdminRoutes);
+//RUTAS
+app.use('/Admin',AdminRoutes);
 
 try {
     await db.authenticate()
@@ -17,11 +20,11 @@ try {
     console.log( `Error:${error}`)
 }
 
-/*
+
 app.get('/',(req,res)=>{
     res.send('Hola')
 });
-*/
+
 
 app.listen(8000, ()=>{
     console.log('Server up in http://localhost:8000/')

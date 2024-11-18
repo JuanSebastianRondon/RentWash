@@ -12,12 +12,13 @@ export const getAllAdmin= async(req, res)=>{
     }  
 }
 
-//Mostrar un admin
-export const getAdmin= async(req, res)=>{
+//Mostrar un admin por cedula
+export const getAdminById= async(req, res)=>{
     try {
-       const admin = await AdminModel.findAll({
-        where:{ cedula:req.params.id}
-       });
+       const admin = await AdminModel.findByPk(req.params.id)
+       if(!admin){
+       return  res.status(404).json({message:'Admin no encontrado'});
+       }
        res.json(admin);
    } catch (error) {
        res.json({message: error.message})
@@ -39,26 +40,30 @@ export const CreateAdmin= async(res,req)=>{
 //Actualizar un  admin
 export const updateAdmin = async(res,req)=>{
     try {
-       await AdminModel.update(req.body,{
+      const result= await AdminModel.update(req.body,{
             where:{cedula:req.params.id}
-        })
+        });
+        if(result[0]===0){
+            return res.status(404).json({message:'Admin no encontrado'});
+        }
         res.json({
             "message":"Admin Actualizado"
-        })
+        });
     } catch (error) {
-        res.json({message: error.message})
-
+        res.json({message: error.message});
     }
 }
 //Eliminar un admin
 
 export const deleteAdmin=async(res,req)=>{
     try {
-        AdminModel.destroy({
+    const result = await AdminModel.destroy({
             where:{cedula:req.params.id}
         })
+        if(result ===0){
+            return res.status(404).json({message:'Admin Eliminado'});
+        }
     } catch (error) {
-        res.json({message: error.message})
-
+        res.json({message: error.message});
     }
-}
+};
