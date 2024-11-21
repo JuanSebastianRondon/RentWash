@@ -26,19 +26,19 @@ export const getAdminById= async(req, res)=>{
    }
 
 //Crear un admin
-export const CreateAdmin= async(res,req)=>{
+export const CreateAdmin= async(req,res)=>{
     try 
     {
-        await AdminModel.create(req.body)
+    await AdminModel.create(req.body);
         res.json({
             "message":"Admin registrado"
-        })
+        });
     } catch (error) {
-        res.json({message: error.message})
+        res.status(500).json({message: error.message})
     }
 }
 //Actualizar un  admin
-export const updateAdmin = async(res,req)=>{
+export const updateAdmin = async(req,res)=>{
     try {
       const result= await AdminModel.update(req.body,{
             where:{cedula:req.params.id}
@@ -55,14 +55,16 @@ export const updateAdmin = async(res,req)=>{
 }
 //Eliminar un admin
 
-export const deleteAdmin=async(res,req)=>{
+export const deleteAdmin=async(req,res)=>{
     try {
     const result = await AdminModel.destroy({
             where:{cedula:req.params.id}
         })
         if(result ===0){
-            return res.status(404).json({message:'Admin Eliminado'});
+            return res.status(404).json({ message: "No se encuentra ese admin" });
+            //  return res.status(404).json({message:'Admin Eliminado'});
         }
+        res.json({ message: "Admin eliminado correctamente" });
     } catch (error) {
         res.json({message: error.message});
     }
