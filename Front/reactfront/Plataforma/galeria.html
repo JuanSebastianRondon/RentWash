@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Lavadoras</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        /* Estilo básico para mejorar el diseño */
+        .lavadoras-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .lavadora-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            width: 250px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lavadora-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .carrito {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+        }
+
+        .finalizar-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .finalizar-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <header class="navbar">
+        <div class="logo">RentWash</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="galeria.html">Lavadoras</a></li>
+                <li><a href="historial.html">Historial</a></li>
+                <li><a href="perfil.html">Mi Perfil</a></li>
+                <li><a href="login.html" id="loginLink">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Galería de Lavadoras -->
+    <section class="galeria">
+        <h2>Lavadoras Disponibles</h2>
+        <div class="lavadoras-container">
+            <!-- Lavadora 1 -->
+            <div class="lavadora-card">
+                <img src="lavadora samsung.avif" alt="Lavadora Samsung">
+                <h3>Lavadora Samsung</h3>
+                <p>Modelo: EcoBubble</p>
+                <p>Estado: Disponible</p>
+                <p>Ubicación: Avenida Fundadores</p>
+                <button class="btn" onclick="addToCart('Lavadora Samsung', 'EcoBubble')">Agregar al carrito</button>
+            </div>
+            <!-- Lavadora 2 -->
+            <div class="lavadora-card">
+                <img src="lavadora lg.avif" alt="Lavadora LG">
+                <h3>Lavadora LG</h3>
+                <p>Modelo: TurboWash</p>
+                <p>Estado: Disponible</p>
+                <p>Ubicación: Calle Central</p>
+                <button class="btn" onclick="addToCart('Lavadora LG', 'TurboWash')">Agregar al carrito</button>
+            </div>
+            <!-- Lavadora 3 -->
+            <div class="lavadora-card">
+                <img src="Lavadora Whirlpool.jpg" alt="Lavadora Whirlpool">
+                <h3>Lavadora Whirlpool</h3>
+                <p>Modelo: FreshCare</p>
+                <p>Estado: Disponible</p>
+                <p>Ubicación: Paramo</p>
+                <button class="btn" onclick="addToCart('Lavadora Whirlpool', 'FreshCare')">Agregar al carrito</button>
+            </div>
+            <!-- Lavadora 4 -->
+            <div class="lavadora-card">
+                <img src="Lavadora Electrolux.jpg" alt="Lavadora Electrolux">
+                <h3>Lavadora Whirlpool</h3>
+                <p>Modelo: FreshCare</p>
+                <p>Estado: Disponible</p>
+                <p>Ubicación: Nevada</p>
+                <button class="btn" onclick="addToCart('Lavadora Electrolux', 'FreshCare')">Agregar al carrito</button>
+            </div>
+        </div>
+
+        <!-- Carrito -->
+        <div class="carrito">
+            <h3>Carrito</h3>
+            <p>Lavadoras seleccionadas: <span id="cartCount">0</span></p>
+            <ul id="cartItems"></ul>
+        </div>
+        
+        <!-- Botón para Rentar -->
+        <button class="finalizar-btn" onclick="goToPaymentPage()">Rentar</button>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>© 2024 RentWash. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+
