@@ -7,15 +7,27 @@ const URI= 'http://localhost:8000/Admin/'
 const CompCreateAdmin=()=>{
     const [cedula, setCedula]= useState('');
     const [nombre, setNombre]= useState('');
+    const [apellido, setapellido]= useState('');
+    const [telefono, setTelefono]= useState('');
+    const [correo, setcorreo]= useState('');
+    const [Contraseña, setContraseña]= useState('');
+
+
     const navigate =useNavigate();
     
     //Procedimiento de guardar
     const store = async(e)=>{
-        e.preventDefault()
-       await axios,post(URI,{
+        e.preventDefault();
+        if (!cedula || !nombre || !apellido ||!telefono
+            || !correo || !Contraseña) {
+            alert('Por favor completa todos los campos');
+            return;
+        }
+       await axios.post(URI,{
         cedula:cedula,
         nombre:nombre,
         apellido:apellido,
+        telefono:telefono,
         correo:correo,
         Contraseña:Contraseña
        })
@@ -24,12 +36,71 @@ const CompCreateAdmin=()=>{
     
     return(  
         <div>
-        <h3>Crear Admin</h3> 
-        <form>
+            <h3>Crear Admin</h3>    
+            <form onSubmit={store}>
+                <div className='mb-3'>
+                    <label className='form-label'>Cedula</label>
+                    <input
+                        value={cedula}
+                        onChange={(e)=>setCedula(e.target.value)}
+                        type="text"
+                        className='form-control'
+                    />
+                </div>    
+                <div className='mb-3'>
+                    <label className='form-label'>nombre</label>
+                    <input
+                        value={nombre}
+                        onChange={(e)=>setNombre(e.target.value)}
+                        type="text"
+                        className='form-control'
+                    />
+                </div>    
+                <div className='mb-3'>
+                    <label className='form-label'>apellido</label>
+                    <input
+                        value={apellido}
+                        onChange={(e)=>setapellido(e.target.value)}
+                        type="text"
+                        className='form-control'
+                    />
+                </div>
 
-        
-        </form>
+                <div className='mb-3'>
+                    <label className='form-label'>telefono</label>
+                    <input
+                        value={telefono}
+                        onChange={(e)=>setTelefono(e.target.value)}
+                        type="text"
+                        className='form-control'
+                    />
+                </div> 
+            
+                <div className='mb-3'>
+                    <label className='form-label'>correo</label>
+                    <input
+                        value={correo}
+                        onChange={(e)=>setcorreo(e.target.value)}
+                        type="text"
+                        className='form-control'
+                    />
+                </div>    
+                <div className='mb-3'>
+                    <label className='form-label'>contraseña</label>
+                    <input
+                        value={Contraseña}
+                        onChange={(e)=>setContraseña(e.target.value)}
+                        type="text"
+                        className='form-control'
+                    />
+                </div>    
+            <button type='submit' className= 'btn btn-primary'>Store</button>
+            
+            </form>
         </div>
     )
 
 }
+
+
+export default CompCreateAdmin;

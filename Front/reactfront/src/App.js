@@ -1,9 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import CompShowAdmin from './Crear Administrador/ShowAdmin.js';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CompCreateAdmin from './Crear Administrador/CreateAdmin.js';
+import CompEditAdmin from './Crear Administrador/EditAmin.js';
 
+//rutas
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -13,9 +15,9 @@ function App() {
       </header>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<CompShowAdmin />}> </Route>
-          <Route path='/create' element={<CompCreateAdmin />}>   </Route>       
-           
+          <Route path='/' element={<CompShowAdmin />}/> 
+          <Route path='/create' element={<CompCreateAdmin />}/>        
+          <Route path='/edit/:id' element={<CompEditAdmin />}/>        
         </Routes>
       </BrowserRouter>
     </div>

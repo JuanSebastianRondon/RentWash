@@ -19,7 +19,7 @@ const CompShowAdmin=()=>{
 
 //procedimiento para eliminar un admin
     const deleteAdmin =async(cedula)=>{
-        axios.delete(`${URI}${cedula}`);
+       await axios.delete(`${URI}${cedula}`);
         getAdmins();
     }
     return(<div className='container'>
@@ -34,8 +34,8 @@ const CompShowAdmin=()=>{
                                 <th>cedula</th>
                                 <th>nombre</th>
                                 <th>Apellido</th>
+                                <th>Telefono</th>
                                 <th>correo</th>  
-                                <th>Borrar</th>
                             </tr>
                         </thead>
                             <tbody>
@@ -43,6 +43,7 @@ const CompShowAdmin=()=>{
                                     <tr key={Admin.cedula}>
                                         <td >{Admin.cedula}</td>
                                         <td >{Admin.nombre}</td>
+                                        <td >{Admin.telefono}</td>
                                         <td >{Admin.apellido}</td>
                                         <td >{Admin.correo}</td>
 
