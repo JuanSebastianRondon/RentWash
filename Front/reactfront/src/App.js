@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import CompShowAdmin from './Crear Administrador/ShowAdmin.js';
 
 function App() {
   return (
@@ -9,17 +10,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button className= "btn btn-primary-lg"><i class="fa-brands fa-react"></i></button>
-
       </header>
+      <CompShowAdmin></CompShowAdmin>
+
     </div>
   );
 }
