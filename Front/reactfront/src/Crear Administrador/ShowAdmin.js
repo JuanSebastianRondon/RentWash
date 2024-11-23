@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
-import {link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const URI= 'http://localhost:8000/Admin/'
 
@@ -25,6 +25,9 @@ const CompShowAdmin=()=>{
     return(<div className='container'>
             <div className='row'>
                 <div className='col'>
+                <Link to="/create" className='btn btn-primary mt-2 mb-2'><i class="fa-solid fa-plus"></i></Link>
+
+
                     <table className='table'>
                         <thead className= 'table-primary'>
                             <tr>
@@ -33,7 +36,6 @@ const CompShowAdmin=()=>{
                                 <th>Apellido</th>
                                 <th>correo</th>  
                                 <th>Borrar</th>
- 
                             </tr>
                         </thead>
                             <tbody>
@@ -45,9 +47,9 @@ const CompShowAdmin=()=>{
                                         <td >{Admin.correo}</td>
 
                                         <td>
-                                       {// <link to={`/edit/${Admin.cedula}`}className="btn btn-info">Editar</link>
-                                            }
-                                    <button onClick={()=>deleteAdmin(Admin.cedula)} className='btn btn-danger'>delete</button>
+                                       <Link to={`/edit/${Admin.cedula}`} className="btn btn-info"><i class="fa-regular fa-pen-to-square"></i></Link>
+                                            
+                                    <button onClick={()=>deleteAdmin(Admin.cedula)} className='btn btn-danger'><i class="fa-solid fa-trash"></i></button>
                                         </td>
                                     </tr>
 
