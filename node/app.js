@@ -1,68 +1,104 @@
 import express from 'express';
 import cors from 'cors';
 import db from './SRC/config/dbConfig.js';
-import  {AdminRoutes, ProductRoutes}  from './SRC/Routes/routes.js';
+import { AdminRoutes, ProductRoutes } from './SRC/Routes/routes.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+// Configuración de __dirname para ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
-//MIDDLEWARES
+// MIDDLEWARES
 app.use(cors());
 app.use(express.json());
-app.use('/Imagenes', express.static(path.join(__dirname, 'public/Imagenes')));
+app.use(express.urlencoded({ extended: true }));
 
-//RUTAS
-app.use('/Admin',AdminRoutes);
-app.use('/Product',ProductRoutes);
+// Configuración carpeta imágenes
+const uploadsFolder = path.join(__dirname, 'public', 'Imagenes');
 
-//configuracion carpeta imagenes
-const uploadsFolder = 'public/Imagenes'; // Aseguramos que las imágenes estén dentro de una carpeta pública
+// Crear la carpeta si no existe
 if (!fs.existsSync(uploadsFolder)) {
-    fs.mkdirSync(uploadsFolder, { recursive: true }); // Crear la carpeta si no existe
+    fs.mkdirSync(uploadsFolder, { recursive: true });
 }
 
+// Configuración de Multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, uploadsFolder); // Carpeta donde se guardarán las imágenes
+        cb(null, uploadsFolder);
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`); // Nombre único para cada archivo
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
     },
 });
 
-
-const upload = multer({ storage });
-
-app.post('/Product/Imagenes', upload.single('file'), (req, res) => {
-    try {
-        const filePath = `/Imagenes/${req.file.filename}`; // Ruta que se almacenará en la base de datos
-        res.status(201).json({
-            message: 'Imagen subida exitosamente',
-            ruta: filePath, // Esta es la URL que se devolverá para que el frontend la guarde
-        });
-    } catch (error) {
-        console.error('Error al subir la imagen:', error);
-        res.status(500).json({ message: 'Error al subir la imagen' });
+const upload = multer({ 
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // Límite de 5MB
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Formato de archivo no válido'));
+        }
     }
 });
 
-try {
-    await db.authenticate()
-    console.log('Conexion exitosa')
-} catch (error) {
-    console.log( `Error:${error}`)
-}
-app.use('/Imagenes', express.static(path.join(uploadsFolder)));
+// Servir archivos estáticos
+app.use('/Imagenes', express.static(uploadsFolder));
 
+// RUTAS
+app.use('/Admin', AdminRoutes);
+app.use('/Product', ProductRoutes);
 
-app.get('/',(req,res)=>{
-    res.send('Hola')
+// Ruta para subir imágenes
+app.post('/Product/Imagenes', upload.single('file'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No se ha proporcionado ningún archivo' });
+        }
+        
+        const filePath = `/Imagenes/${req.file.filename}`;
+        res.status(201).json({
+            message: 'Imagen subida exitosamente',
+            ruta: filePath,
+        });
+    } catch (error) {
+        console.error('Error al subir la imagen:', error);
+        res.status(500).json({ 
+            message: 'Error al subir la imagen',
+            error: error.message 
+        });
+    }
 });
 
-
-
-app.listen(8000, ()=>{
-    console.log('Server up in http://localhost:8000/')
+// Middleware de manejo de errores
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        message: 'Error interno del servidor',
+        error: err.message
+    });
 });
+
+// Conexión a la base de datos
+const initializeServer = async () => {
+    try {
+        await db.authenticate();
+        console.log('Conexión a la base de datos exitosa');
+        
+        app.listen(8000, () => {
+            console.log('Server up in http://localhost:8000/');
+        });
+    } catch (error) {
+        console.error('Error al iniciar el servidor:', error);
+    }
+};
+
+initializeServer();
