@@ -11,14 +11,16 @@ const app = express();
 //MIDDLEWARES
 app.use(cors());
 app.use(express.json());
+app.use('/Imagenes', express.static(path.join(__dirname, 'public/Imagenes')));
+
 //RUTAS
 app.use('/Admin',AdminRoutes);
 app.use('/Product',ProductRoutes);
 
 //configuracion carpeta imagenes
-const uploadsFolder = 'Imagenes';
+const uploadsFolder = 'public/Imagenes'; // Aseguramos que las imágenes estén dentro de una carpeta pública
 if (!fs.existsSync(uploadsFolder)) {
-    fs.mkdirSync(uploadsFolder); // Crea la carpeta si no existe
+    fs.mkdirSync(uploadsFolder, { recursive: true }); // Crear la carpeta si no existe
 }
 
 const storage = multer.diskStorage({
@@ -32,12 +34,13 @@ const storage = multer.diskStorage({
 
 
 const upload = multer({ storage });
-app.post('/Product/Imagenes', upload.single('imagen'), (req, res) => {
+
+app.post('/Product/Imagenes', upload.single('file'), (req, res) => {
     try {
-        const filePath = path.join(uploadsFolder, req.file.filename);
+        const filePath = `/Imagenes/${req.file.filename}`; // Ruta que se almacenará en la base de datos
         res.status(201).json({
             message: 'Imagen subida exitosamente',
-            ruta: filePath,
+            ruta: filePath, // Esta es la URL que se devolverá para que el frontend la guarde
         });
     } catch (error) {
         console.error('Error al subir la imagen:', error);
