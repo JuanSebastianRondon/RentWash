@@ -1,37 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RentWash - Alquila Lavadoras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Barra de navegación -->
     <header class="navbar">
-        <div class="logo">RentWash</div>
-        <nav>
-            <ul>
-                <li><a href="../inicio/indexNormal.html">Inicio</a></li>
-                <li><a href="../galeria/galeria.html">Lavadoras</a></li>
-                <li><a href="../pago/pago.html">Mi Perfil</a></li>
-                <li><a href="../login/login.html">Iniciar Sesión</a></li>
-            </ul>
-        </nav>
+        <div class="navbar-content">
+            <a href="/" class="logo">RentWash</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../inicio/indexNormal.html">Inicio</a></li>
+                    <li><a href="../galeria/galeria.html">Lavadoras</a></li>
+                    <li><a href="../pago/pago.html">Mi Perfil</a></li>
+                    <li><a href="../login/login.html">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- Sección Hero (Bienvenida) -->
-    <section class="hero">
-        <h1>Bienvenido a RentWash</h1>
-        <p>La mejor solución para alquilar lavadoras de forma rápida y sencilla.</p>
-        <a href="login/login.html" class="btn">Inicia sesión para comenzar</a>
-    </section>
+    <main class="hero">
+        <script>
+            // Create animated bubbles
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 100 + 50;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.top = `${Math.random() * 100}%`;
+                bubble.style.animationDelay = `${Math.random() * 8}s`;
+                document.querySelector('.hero').appendChild(bubble);
+            }
+        </script>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Bienvenido a RentWash</h1>
+            <p class="hero-subtitle">La mejor solución para alquilar lavadoras de forma rápida y sencilla.</p>
+            <a href="../login/login.html" class="cta-button">Inicia sesión para comenzar</a>
+        </div>
+    </main>
 
-    <!-- Pie de página -->
     <footer class="footer">
         <p>© 2024 RentWash. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>
-
-
