@@ -1,70 +1,45 @@
+import axios from 'axios'; // Usamos axios para hacer peticiones HTTP
 import BarModel from "../Models/BarrioModel";
 
-//Crud
+// Función para obtener las coordenadas a partir de una dirección usando un servicio de geocodificación
+const getCoordinatesFromAddress = async (address) => {
+    const apiKey = 'TU_API_KEY_DE_GOOGLE_MAPS'; // Usa tu API key de Google Maps o cualquier otro servicio
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
-//Mostrar todos los barrios
-export const getAllUser= async(req, res)=>{
- try {
-    const barrios = await BarModel.findAll();
-    res.json(barrios);
-} catch (error) {
-    res.json({message: error.message})
-    }  
-}
-
-//Mostrar un barrio por id
-export const getUserById= async(req, res)=>{
     try {
-       const barrio = await BarModel.findByPk(req.params.id)
-       if(!barrio){
-       return  res.status(404).json({message:'barrio no encontrado'});
-       }
-       res.json(user);
-   } catch (error) {
-       res.json({message: error.message})
-       }  
-   }
-
-//Crear un barrio
-export const CreateUser= async(req,res)=>{
-    try 
-    {
-    await BarModel.create(req.body);
-        res.json({
-            "message":"barrio registrado"
-        });
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-}
-//Actualizar un  barrio
-export const updateUser = async(req,res)=>{
-    try {
-      const result= await BarModel.update(req.body,{
-            where:{Idbarrio:req.params.id}
-        });
-        if(result[0]===0){
-            return res.status(404).json({message:'barrio no encontrado'});
+        const response = await axios.get(url);
+        const location = response.data.results[0]?.geometry.location;
+        if (location) {
+            return { lat: location.lat, lng: location.lng };
+        } else {
+            throw new Error('Dirección no encontrada');
         }
-        res.json({
-            "message":"barrio Actualizado"
-        });
     } catch (error) {
-        res.json({message: error.message});
+        throw new Error('Error al obtener las coordenadas: ' + error.message);
     }
-}
+};
 
-//Eliminar un barrio
-export const deleteUser=async(req,res)=>{
+// Función para determinar el barrio a partir de las coordenadas
+export const getBarrioFromAddress = async (req, res) => {
+    const { direccion } = req.body;
+
     try {
-    const result = await BarModel.destroy({
-            where:{Idbarrio:req.params.id}
-        })
-        if(result ===0){
-            return res.status(404).json({ message: "No se encuentra ese barrio" });
+        const { lat, lng } = await getCoordinatesFromAddress(direccion);
+
+        // Buscar en la base de datos el barrio que contenga estas coordenadas
+        const barrios = await BarModel.findAll();
+
+        for (const barrio of barrios) {
+            if (lat >= barrio.latMin && lat <= barrio.latMax && lng >= barrio.lonMin && lng <= barrio.lonMax) {
+                return res.json({
+                    message: 'Barrio encontrado',
+                    barrio: barrio.nombre,
+                });
+            }
         }
-        res.json({ message: "barrio eliminado correctamente" });
+
+        return res.status(404).json({ message: 'No se pudo determinar el barrio para la dirección proporcionada.' });
     } catch (error) {
-        res.json({message: error.message});
+        return res.status(500).json({ message: error.message });
     }
 };

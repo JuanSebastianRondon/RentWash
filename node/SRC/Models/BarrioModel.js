@@ -1,24 +1,32 @@
-import db from "../config/dbConfig.js";
-import { DataTypes }  from "sequelize";
+import { DataTypes } from 'sequelize';
+import db from '../config/dbConfig';
 
-const BarModel=db.define('barrio',{
-    idBarrio:{
-        type:DataTypes.INTEGER,
+const BarModel = db.define('Barrio', {
+    idBarrio: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        field: 'idBarrio',
     },
-    nombre:{
-        type:DataTypes.STRING(100),
+    nombre: {
+        type: DataTypes.STRING,
         allowNull: false,
-        field: 'nombre',
     },
-  
-},{
-        tableName:'usuario',
-        timestamps: false,   
+    latMin: { // Latitud mínima
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    latMax: { // Latitud máxima
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    lonMin: { // Longitud mínima
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    lonMax: { // Longitud máxima
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    }
 });
 
 export default BarModel;
