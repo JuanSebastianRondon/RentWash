@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import db from './SRC/config/dbConfig.js';
-import { AdminRoutes, ProductRoutes } from './SRC/Routes/routes.js';
+import { AdminRoutes, ProductRoutes, UserRoutes } from './SRC/Routes/routes.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -53,9 +53,11 @@ const upload = multer({
 // Servir archivos estáticos
 app.use('/Imagenes', express.static(uploadsFolder));
 
-// RUTAS
+//#region Rutas
 app.use('/Admin', AdminRoutes);
 app.use('/Product', ProductRoutes);
+app.use('/User',UserRoutes);
+//#endregion
 
 // Ruta para subir imágenes
 app.post('/Product/Imagenes', upload.single('file'), (req, res) => {

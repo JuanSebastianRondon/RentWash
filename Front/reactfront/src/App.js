@@ -1,8 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
-//import CompShowAdmin from './Crear Administrador/ShowAdmin.js';
-//import CompCreateAdmin from './Crear Administrador/CreateAdmin.js';
-//import CompEditAdmin from './Crear Administrador/EditAmin.js';
+// Importa la nueva imagen
+import image from './image.jpg'; // Cambia el nombre según tu archivo
 
 //rutas
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -14,18 +12,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        {/* Usa la nueva imagen aquí */}
+        <img src={image} className="App-logo" alt="Logo personalizado" />
       </header>
       <BrowserRouter>
         <Routes>
-       {/* <Route path='/' element={<CompShowAdmin />}/> 
-          <Route path='/create' element={<CompCreateAdmin />}/>        
-          <Route path='/edit/:id' element={<CompEditAdmin />}/>   
-        
-        */  } 
-          <Route path='/' element={<CompShowProduct />}/> 
-          <Route path='/create' element={<CompCreateProduct />}/>        
-          <Route path='/edit/:id' element={<CompEditProduct />}/>         
+          <Route path='/' element={<CompShowProduct />} />
+          <Route path='/create' element={<CompCreateProduct />} />
+          <Route path='/edit/:id' element={<CompEditProduct />} />
         </Routes>
       </BrowserRouter>
     </div>
