@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import db from '../config/dbConfig';
+import db from '../config/dbConfig.js';
 
 const BarModel = db.define('Barrio', {
     idBarrio: {

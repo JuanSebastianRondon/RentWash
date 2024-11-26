@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import db from './SRC/config/dbConfig.js';
-import { AdminRoutes, BarrioRoutes, ProductRoutes, UserRoutes } from './SRC/Routes/routes.js';
+import { AdminRoutes, ProductRoutes, UserRoutes } from './SRC/Routes/routes.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -17,8 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
-
 
 // Configuración carpeta imágenes
 const uploadsFolder = path.join(__dirname, 'public', 'Imagenes');
@@ -39,7 +37,7 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({ 
+const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // Límite de 5MB
     fileFilter: (req, file, cb) => {
@@ -58,9 +56,7 @@ app.use('/Imagenes', express.static(uploadsFolder));
 //#region Rutas
 app.use('/Admin', AdminRoutes);
 app.use('/Product', ProductRoutes);
-app.use('/User',UserRoutes);
-app.use('/api/barrio', BarrioRoutes);
-
+app.use('/User', UserRoutes);
 //#endregion
 
 // Ruta para subir imágenes
@@ -69,7 +65,7 @@ app.post('/Product/Imagenes', upload.single('file'), (req, res) => {
         if (!req.file) {
             return res.status(400).json({ message: 'No se ha proporcionado ningún archivo' });
         }
-        
+
         const filePath = `/Imagenes/${req.file.filename}`;
         res.status(201).json({
             message: 'Imagen subida exitosamente',
@@ -77,9 +73,9 @@ app.post('/Product/Imagenes', upload.single('file'), (req, res) => {
         });
     } catch (error) {
         console.error('Error al subir la imagen:', error);
-        res.status(500).json({ 
+        res.status(500).json({
             message: 'Error al subir la imagen',
-            error: error.message 
+            error: error.message
         });
     }
 });

@@ -1,5 +1,5 @@
 import axios from 'axios';  // Usamos axios para hacer peticiones HTTP
-import BarModel from "../Models/BarrioModel";  // Importamos el modelo de Barrio
+import BarModel from "../Models/BarrioModel.js";  // Importamos el modelo de Barrio
 
 // Función para obtener las coordenadas a partir de una dirección usando un servicio de geocodificación
 const getCoordinatesFromAddress = async (address) => {
