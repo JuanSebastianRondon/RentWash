@@ -1,14 +1,14 @@
-import axios from 'axios'; // Usamos axios para hacer peticiones HTTP
-import BarModel from "../Models/BarrioModel";
+import axios from 'axios';  // Usamos axios para hacer peticiones HTTP
+import BarModel from "../Models/BarrioModel";  // Importamos el modelo de Barrio
 
 // Función para obtener las coordenadas a partir de una dirección usando un servicio de geocodificación
 const getCoordinatesFromAddress = async (address) => {
-    const apiKey = 'TU_API_KEY_DE_GOOGLE_MAPS'; // Usa tu API key de Google Maps o cualquier otro servicio
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+    const apiKey = '935297473b1e4869aa1242101b81141a'; // Usa tu API key de OpenCage o cualquier otro servicio
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiKey}`;
 
     try {
         const response = await axios.get(url);
-        const location = response.data.results[0]?.geometry.location;
+        const location = response.data.results[0]?.geometry;
         if (location) {
             return { lat: location.lat, lng: location.lng };
         } else {
@@ -19,16 +19,18 @@ const getCoordinatesFromAddress = async (address) => {
     }
 };
 
-// Función para determinar el barrio a partir de las coordenadas
+// Función para obtener el barrio basado en la dirección
 export const getBarrioFromAddress = async (req, res) => {
     const { direccion } = req.body;
 
     try {
+        // Obtener las coordenadas de la dirección
         const { lat, lng } = await getCoordinatesFromAddress(direccion);
 
-        // Buscar en la base de datos el barrio que contenga estas coordenadas
+        // Buscar todos los barrios en la base de datos
         const barrios = await BarModel.findAll();
 
+        // Verificar si la latitud y longitud caen dentro de los límites de algún barrio
         for (const barrio of barrios) {
             if (lat >= barrio.latMin && lat <= barrio.latMax && lng >= barrio.lonMin && lng <= barrio.lonMax) {
                 return res.json({

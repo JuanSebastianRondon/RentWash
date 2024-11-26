@@ -31,16 +31,10 @@ const ModelUser=db.define('usuario',{
         unique: true,
         field: 'correo',
     },
-    
     IdBarrio:{
-        type:DataTypes.STRING(100),
+        type:DataTypes.INTEGER,
         allowNull: false,
-        field: 'IdDireccion',
-    },
-    IdDireccion:{
-        type:DataTypes.STRING(100),
-        allowNull: false,
-        field: 'IdDireccion',
+        field: 'IdBarrio',
     },
     Contraseña:{
         type:DataTypes.STRING(30),

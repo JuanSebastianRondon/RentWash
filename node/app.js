@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import db from './SRC/config/dbConfig.js';
-import { AdminRoutes, ProductRoutes, UserRoutes } from './SRC/Routes/routes.js';
+import { AdminRoutes, BarrioRoutes, ProductRoutes, UserRoutes } from './SRC/Routes/routes.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -17,6 +17,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Configuración carpeta imágenes
 const uploadsFolder = path.join(__dirname, 'public', 'Imagenes');
@@ -57,6 +59,8 @@ app.use('/Imagenes', express.static(uploadsFolder));
 app.use('/Admin', AdminRoutes);
 app.use('/Product', ProductRoutes);
 app.use('/User',UserRoutes);
+app.use('/api/barrio', BarrioRoutes);
+
 //#endregion
 
 // Ruta para subir imágenes

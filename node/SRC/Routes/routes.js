@@ -34,10 +34,9 @@ UserRoutes.put('/:id',updateUser);
 UserRoutes.delete('/:id',deleteUser);
 
 //Barrios
-BarrioRoutes.get('/',getBarrioFromAddress);
-BarrioRoutes.get('/:id',getBarrioById);
+BarrioRoutes.post('/detectar-barrio',getBarrioFromAddress);
 
 
 
 
-export  { AdminRoutes, ProductRoutes, UserRoutes };
+export  { AdminRoutes, ProductRoutes, UserRoutes, BarrioRoutes };
