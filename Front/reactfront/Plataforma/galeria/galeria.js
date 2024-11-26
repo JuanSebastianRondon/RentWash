@@ -61,7 +61,6 @@ const GaleriaLavadoras = () => {
                             }}
                         />
                         <h3>{product.nombreProducto}</h3>
-                        <p>Modelo: {product.modelo}</p>
                         <p>Estado: {product.Disponibilidad ? 'Disponible' : 'No disponible'}</p>
                         <button className="btn">Agregar al carrito</button>
                     </div>
