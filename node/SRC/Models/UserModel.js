@@ -36,6 +36,8 @@ const ModelUser = db.define('Usuario', {
         allowNull: false,
     }
 }, {
+
+    timestamps: false,
     // Encriptar la contraseña antes de crear o actualizar el usuario
     hooks: {
         beforeCreate: async (user) => {

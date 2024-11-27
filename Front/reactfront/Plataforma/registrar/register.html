@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="stylesRegister.css">
 </head>
 <body>
+    <!-- Barra de navegación -->
     <header class="navbar">
         <div class="logo">RentWash</div>
     </header>
 
+    <!-- Formulario de registro -->
     <section class="register">
         <h2>Regístrate</h2>
         <form id="register-form">
@@ -30,14 +32,27 @@
             <input type="email" id="correo" name="correo" required>
 
             <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required placeholder="Mínimo 8 caracteres, mayúscula, número">
-            
-            <small class="password-hint">Debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial.</small>
+            <div class="password-container">
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Mínimo 8 caracteres" 
+                    required>
+                <button 
+                    type="button" 
+                    class="toggle-password" 
+                    id="toggle-password">Mostrar</button>
+            </div>
+            <small class="password-hint">
+                Debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial.
+            </small>
 
             <button type="submit" class="btn">Registrar</button>
         </form>
     </section>
 
+    <!-- Pie de página -->
     <footer class="footer">
         <p>© 2024 RentWash. Todos los derechos reservados.</p>
     </footer>

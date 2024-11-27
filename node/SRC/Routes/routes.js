@@ -29,8 +29,8 @@ ProductRoutes.put('/:id', updateProduct);
 ProductRoutes.delete('/:id', deleteProduct);
 
 // Rutas de Usuarios
-UserRoutes.post('/registro', createUser); // Registrar nuevo usuario
-UserRoutes.post('/login', loginUser); // Iniciar sesión
+UserRoutes.post('/', createUser); // Registrar nuevo usuario
+UserRoutes.post('/', loginUser); // Iniciar sesión
 
 // Rutas de perfil de usuario
 UserRoutes.get('/:id', getUserById); // Obtener perfil de usuario
