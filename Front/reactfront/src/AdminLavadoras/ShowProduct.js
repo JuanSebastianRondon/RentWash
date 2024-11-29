@@ -103,7 +103,7 @@ const CompShowProduct = () => {
                         <thead className='table-primary'>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Precio</th>
+                                <th>PrecioxHora</th>
                                 <th>Disponible</th>
                                 <th>Imagen</th>
                                 <th>Acciones</th>

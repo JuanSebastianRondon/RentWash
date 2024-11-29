@@ -105,7 +105,7 @@ const CompEditProduct = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="precio" className="form-label">Precio</label>
+                    <label htmlFor="precio" className="form-label">PrecioxHora</label>
                     <input
                         type="number"
                         className="form-control"

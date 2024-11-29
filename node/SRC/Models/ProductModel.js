@@ -8,7 +8,7 @@ const ProdModel=db.define('Producto',{
         autoIncrement: true
     },
     nombreProducto:{
-        type:DataTypes.STRING(50),
+        type:DataTypes.STRING(100),
         allowNull: false,
     },
     precio:{
